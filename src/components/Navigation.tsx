@@ -1,6 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Brain, Menu, Bell, User, Search } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
 
 export function Navigation() {
   return (
@@ -40,12 +49,23 @@ export function Navigation() {
               <Search className="w-4 h-4" />
             </Button>
             
-            <Button variant="ghost" size="sm" className="relative">
-              <Bell className="w-4 h-4" />
-              <Badge className="absolute -top-1 -right-1 w-5 h-5 text-xs bg-primary text-primary-foreground p-0 flex items-center justify-center">
-                3
-              </Badge>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="relative">
+                  <Bell className="w-4 h-4" />
+                  <Badge className="absolute -top-1 -right-1 w-5 h-5 text-xs bg-primary text-primary-foreground p-0 flex items-center justify-center">
+                    3
+                  </Badge>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>New student signed up: Priya Sharma</DropdownMenuItem>
+                <DropdownMenuItem>Your job posting "Frontend Developer" has 5 new applicants</DropdownMenuItem>
+                <DropdownMenuItem>Reminder: Interview with Rohan Verma at 3 PM</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
             <Button variant="ghost" size="sm">
               <User className="w-4 h-4" />
