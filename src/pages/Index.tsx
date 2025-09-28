@@ -142,7 +142,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <div className="twinkling-stars" />
+      <div id="stars" className="stars"></div>
+      <div id="stars2" className="stars"></div>
+      <div id="stars3" className="stars"></div>
       <Navigation />
       
       {/* Hero Section */}
