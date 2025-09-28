@@ -63,7 +63,10 @@ export const mockStudents: Student[] = [
     avatar: `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face`,
     status: 'available',
     location: 'Chennai, Tamil Nadu',
-    phone: '+91 98765 43210'
+    phone: '+91 98765 43210',
+    isFavorite: true,
+    isShortlisted: false,
+    notes: 'Strong candidate for frontend roles.'
   },
   {
     id: 'std-2',
@@ -76,10 +79,13 @@ export const mockStudents: Student[] = [
     interests: ['Data Science', 'Frontend Development', 'Machine Learning'],
     projects: [mockProjects[2], mockProjects[3]],
     graduationYear: 2024,
-    avatar: `https://images.unsplash.com/photo-1494790108755-2616c67c6d8e?w=400&h=400&fit=crop&crop=face`,
+    avatar: `https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face`,
     status: 'interviewing',
     location: 'Chennai, Tamil Nadu',
-    phone: '+91 87654 32109'
+    phone: '+91 87654 32109',
+    isFavorite: false,
+    isShortlisted: true,
+    notes: ''
   },
   {
     id: 'std-3',
@@ -95,7 +101,10 @@ export const mockStudents: Student[] = [
     avatar: `https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face`,
     status: 'available',
     location: 'Chennai, Tamil Nadu',
-    phone: '+91 76543 21098'
+    phone: '+91 76543 21098',
+    isFavorite: false,
+    isShortlisted: false,
+    notes: ''
   },
   {
     id: 'std-4',
@@ -111,7 +120,10 @@ export const mockStudents: Student[] = [
     avatar: `https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face`,
     status: 'hired',
     location: 'Chennai, Tamil Nadu',
-    phone: '+91 65432 10987'
+    phone: '+91 65432 10987',
+    isFavorite: false,
+    isShortlisted: false,
+    notes: 'Hired by a top tech company.'
   }
 ];
 
