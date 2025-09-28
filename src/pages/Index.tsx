@@ -9,10 +9,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { mockStudents as initialMockStudents } from '@/data/mockData';
 import { Student } from '@/types/student';
 import { CollegeIntegration } from '@/components/CollegeIntegration';
-import { 
-  Users, 
-  TrendingUp, 
-  Building2, 
+import {
+  Users,
+  TrendingUp,
+  Building2,
   Search,
   Sparkles,
   Target,
@@ -40,10 +40,10 @@ const Index = () => {
       if (searchFilters.query) {
         const query = searchFilters.query.toLowerCase();
         const matchesName = student.name.toLowerCase().includes(query);
-        const matchesSkills = student.skills.some(skill => 
+        const matchesSkills = student.skills.some(skill =>
           skill.toLowerCase().includes(query)
         );
-        const matchesInterests = student.interests.some(interest => 
+        const matchesInterests = student.interests.some(interest =>
           interest.toLowerCase().includes(query)
         );
         const matchesUniversity = student.university.toLowerCase().includes(query);
@@ -79,7 +79,7 @@ const Index = () => {
       }
 
       // Graduation year filter
-      if (searchFilters.graduationYear && 
+      if (searchFilters.graduationYear &&
           student.graduationYear.toString() !== searchFilters.graduationYear) {
         return false;
       }
@@ -141,7 +141,8 @@ const Index = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <div className="twinkling-stars" />
       <Navigation />
       
       {/* Hero Section */}
@@ -166,14 +167,14 @@ const Index = () => {
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Revolutionize campus recruitment with our intelligent platform that seamlessly connects 
+                Revolutionize campus recruitment with our intelligent platform that seamlessly connects
                 talented graduates with ideal career opportunities through AI-powered matching.
               </p>
             </div>
             
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-gradient-primary hover:shadow-glow transition-all duration-300 gap-2 animate-pulse-glow"
                 onClick={handleExploreClick}
               >
@@ -324,8 +325,8 @@ const Index = () => {
                 <p className="text-muted-foreground">
                   Try adjusting your search criteria or clear some filters
                 </p>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setSearchFilters({
                     query: '',
                     university: '',
