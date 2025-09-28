@@ -9,9 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useState } from 'react';
+import { Input } from './ui/input';
 
 
 export function Navigation() {
+  const [searchVisible, setSearchVisible] = useState(false);
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
       <div className="container mx-auto max-w-6xl px-4">
@@ -45,10 +49,19 @@ export function Navigation() {
 
           {/* Right Section */}
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="hidden md:flex">
-              <Search className="w-4 h-4" />
-            </Button>
-            
+            {searchVisible ? (
+              <Input
+                type="text"
+                placeholder="Search..."
+                className="w-48 transition-all duration-300 ease-in-out"
+                onBlur={() => setSearchVisible(false)}
+              />
+            ) : (
+              <Button variant="ghost" size="sm" className="hidden md:flex" onClick={() => setSearchVisible(true)}>
+                <Search className="w-4 h-4" />
+              </Button>
+            )}
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="relative">
@@ -66,11 +79,19 @@ export function Navigation() {
                 <DropdownMenuItem>Reminder: Interview with Rohan Verma at 3 PM</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            
-            <Button variant="ghost" size="sm">
-              <User className="w-4 h-4" />
-            </Button>
-            
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <User className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Login</DropdownMenuItem>
+                <DropdownMenuItem>Sign Up</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="ghost" size="sm" className="md:hidden">
               <Menu className="w-4 h-4" />
             </Button>
