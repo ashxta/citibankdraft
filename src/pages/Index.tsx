@@ -6,11 +6,11 @@ import { SearchFilters, SearchFilters as ISearchFilters } from '@/components/Sea
 import { StatsCard } from '@/components/StatsCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { mockStudents } from '@/data/mockData';
+import { mockStudents as initialMockStudents } from '@/data/mockData';
 import { Student } from '@/types/student';
+import { CollegeIntegration } from '@/components/CollegeIntegration';
 import { 
   Users, 
-  GraduationCap, 
   TrendingUp, 
   Building2, 
   Search,
@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 
 const Index = () => {
+  const [mockStudents, setMockStudents] = useState<Student[]>(initialMockStudents);
   const [searchFilters, setSearchFilters] = useState<ISearchFilters>({
     query: '',
     university: '',
@@ -85,7 +86,7 @@ const Index = () => {
 
       return true;
     });
-  }, [searchFilters]);
+  }, [searchFilters, mockStudents]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -100,12 +101,44 @@ const Index = () => {
       averageCgpa: averageCgpa.toFixed(1),
       universities
     };
-  }, []);
+  }, [mockStudents]);
 
   const handleViewProfile = (student: Student) => {
     // In a real app, this would navigate to a detailed profile page
     console.log('Viewing profile for:', student.name);
   };
+
+  const handleFavoriteToggle = (studentId: string) => {
+    setMockStudents(prevStudents =>
+      prevStudents.map(student =>
+        student.id === studentId ? { ...student, isFavorite: !student.isFavorite } : student
+      )
+    );
+  };
+
+  const handleShortlistToggle = (studentId: string) => {
+    setMockStudents(prevStudents =>
+      prevStudents.map(student =>
+        student.id === studentId ? { ...student, isShortlisted: !student.isShortlisted } : student
+      )
+    );
+  };
+
+  const handleSetNotes = (studentId: string, notes: string) => {
+    setMockStudents(prevStudents =>
+      prevStudents.map(student =>
+        student.id === studentId ? { ...student, notes } : student
+      )
+    );
+  };
+
+  const handleExploreClick = () => {
+    const studentProfilesSection = document.getElementById('student-profiles');
+    if (studentProfilesSection) {
+      studentProfilesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -142,6 +175,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-primary hover:shadow-glow transition-all duration-300 gap-2 animate-pulse-glow"
+                onClick={handleExploreClick}
               >
                 <Search className="w-5 h-5" />
                 Explore Students
@@ -255,7 +289,7 @@ const Index = () => {
           <SearchFilters onSearch={setSearchFilters} />
 
           {/* Results Header */}
-          <div className="flex items-center justify-between">
+          <div id="student-profiles" className="flex items-center justify-between">
             <div>
               <h3 className="text-2xl font-bold gradient-text">
                 Student Profiles
@@ -273,6 +307,9 @@ const Index = () => {
                 <StudentCard
                   student={student}
                   onViewProfile={handleViewProfile}
+                  onFavoriteToggle={handleFavoriteToggle}
+                  onShortlistToggle={handleShortlistToggle}
+                  onSetNotes={handleSetNotes}
                 />
               </div>
             ))}
@@ -303,6 +340,8 @@ const Index = () => {
               </div>
             </Card>
           )}
+
+          <CollegeIntegration />
         </div>
       </section>
       
