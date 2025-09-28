@@ -13,6 +13,9 @@ export interface Student {
   status: 'available' | 'hired' | 'interviewing';
   location: string;
   phone: string;
+  isFavorite?: boolean;
+  isShortlisted?: boolean;
+  notes?: string;
 }
 
 export interface Project {
