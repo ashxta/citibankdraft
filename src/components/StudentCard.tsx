@@ -2,14 +2,21 @@ import { Student } from '@/types/student';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, GraduationCap, Star, Mail, Phone, ExternalLink } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { MapPin, GraduationCap, Star, Mail, Phone, ExternalLink, Heart, Bookmark, MessageSquare } from 'lucide-react';
+import { useState } from 'react';
 
 interface StudentCardProps {
   student: Student;
   onViewProfile?: (student: Student) => void;
+  onFavoriteToggle: (studentId: string) => void;
+  onShortlistToggle: (studentId: string) => void;
+  onSetNotes: (studentId: string, notes: string) => void;
 }
 
-export function StudentCard({ student, onViewProfile }: StudentCardProps) {
+export function StudentCard({ student, onViewProfile, onFavoriteToggle, onShortlistToggle, onSetNotes }: StudentCardProps) {
+  const [notes, setNotes] = useState(student.notes || '');
+
   const getStatusColor = (status: Student['status']) => {
     switch (status) {
       case 'available':
@@ -22,6 +29,12 @@ export function StudentCard({ student, onViewProfile }: StudentCardProps) {
         return 'bg-muted/20 text-muted-foreground border-muted/30';
     }
   };
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(e.target.value);
+    onSetNotes(student.id, e.target.value);
+  };
+
 
   return (
     <Card className="group glass-card hover-lift hover-glow border-border/50 overflow-hidden animate-slide-up">
@@ -88,37 +101,15 @@ export function StudentCard({ student, onViewProfile }: StudentCardProps) {
               </div>
             </div>
 
-            {/* Interests */}
+            {/* Recruiter Notes */}
             <div>
-              <h4 className="text-sm font-semibold mb-2">Interests</h4>
-              <div className="flex flex-wrap gap-1">
-                {student.interests.map((interest, index) => (
-                  <Badge
-                    key={interest}
-                    variant="outline"
-                    className="text-xs border-primary/30 text-primary/80"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {interest}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Projects */}
-            <div>
-              <h4 className="text-sm font-semibold mb-2">Projects ({student.projects.length})</h4>
-              <div className="space-y-2">
-                {student.projects.slice(0, 2).map((project) => (
-                  <div key={project.id} className="text-xs text-muted-foreground bg-card-glass p-2 rounded">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-foreground">{project.title}</span>
-                      {project.link && <ExternalLink className="w-3 h-3" />}
-                    </div>
-                    <p className="truncate mt-1">{project.description}</p>
-                  </div>
-                ))}
-              </div>
+              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2"><MessageSquare className="w-4 h-4" /> Recruiter Notes</h4>
+              <Textarea
+                placeholder="Add notes..."
+                value={notes}
+                onChange={handleNotesChange}
+                className="bg-background/50 border-border/50 focus:border-primary transition-all text-xs"
+              />
             </div>
 
             {/* Contact Actions */}
@@ -131,11 +122,11 @@ export function StudentCard({ student, onViewProfile }: StudentCardProps) {
               >
                 View Profile
               </Button>
-              <Button variant="outline" size="sm" className="hover-lift">
-                <Mail className="w-4 h-4" />
+              <Button variant="outline" size="sm" className="hover-lift" onClick={() => onFavoriteToggle(student.id)}>
+                <Heart className={`w-4 h-4 ${student.isFavorite ? 'text-red-500 fill-current' : ''}`} />
               </Button>
-              <Button variant="outline" size="sm" className="hover-lift">
-                <Phone className="w-4 h-4" />
+              <Button variant="outline" size="sm" className="hover-lift" onClick={() => onShortlistToggle(student.id)}>
+                <Bookmark className={`w-4 h-4 ${student.isShortlisted ? 'text-blue-500 fill-current' : ''}`} />
               </Button>
             </div>
           </CardContent>
